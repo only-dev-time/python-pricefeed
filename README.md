@@ -4,7 +4,7 @@
 
 This is a python version of the price feed publishing tool from [rexthetech's](https://github.com/rexthetech/pricefeed) respectively [justyy's](https://github.com/DoctorLai/pricefeed) javascript version.
 
-This version is especially intended for users who already use steem-python and do not want to enter their private key in config.json. With the wallet tool [steempy](https://steem.readthedocs.io/en/latest/cli.html), the keys can be used in such a way that they do not have to be stored locally in plain text. For configuration of steempy look at this [tutorial](https://steemit.com/utopian-io/@steempytutorials/part-1-how-to-configure-the-steempy-cli-wallet-and-upvote-an-article-with-steem-python).
+This version is especially intended for users who already use steem-python and do not want to enter their private key in config.json. With the wallet tool [steempy](https://steem.readthedocs.io/en/latest/cli.html) the keys can be used in such a way that they do not have to be stored locally in plain text. For configuration of steempy look at this [tutorial](https://steemit.com/utopian-io/@steempytutorials/part-1-how-to-configure-the-steempy-cli-wallet-and-upvote-an-article-with-steem-python).
 
 ## Installed python & steem-python
 
@@ -21,29 +21,27 @@ $ chmod a+x feed.py
 $ chmod a+x pricefeed_start.sh
 ```
 
-Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://steem.readthedocs.io/en/latest/cli.html)
+Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://steem.readthedocs.io/en/latest/cli.html).
 
 ### Run in background as cron job
 
-I suggest using the using of crontab to manage and run your python pricefeed in the background. Use the following commands to install the cron job and run the pricefeed program:
+I suggest using then crontab to manage and run your python pricefeed in the background. Use the following command to install the cron job for running the pricefeed program:
 
 ```bash
 $ crontab -e
 ```
 
-Add following line to the end of existing entries:
+Add the following line to the end of existing entries:
 
 ```bash
 46 3,15 * * * ~/pricefeed/pricefeed_start.sh &
 ```
 
-Maybe you have to changed the path. Save the file with <code>Ctrl+X</code> (if use the nano editor). Now the script will start at 3:46 am/pm every day.
-
-In that case, the script should be configured so that the internal loop only runs once. For this, set <code>"interval": 0</code> in config.json (see below).
+Maybe you have to change the path. Save the file with <code>Ctrl+X</code> (if you use the nano editor). Now the script will start at 3:46 am/pm every day. In that case, the script should be configured that the internal loop only runs once. For this, set the field <code>"interval": 0</code> in config.json (see below).
 
 ### Run in background by starting manually
 
-You can also start the programme once and then let the internal loop run continuously. For this, set <code>"interval"</code> in config.json with the delay time in minutes (see below).
+You can also start the program once and then let the internal loop run continuously. For this, set <code>"interval"</code> in config.json with the delay time in minutes (see below).
 Start the program with following bash command:
 
 ```bash
