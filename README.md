@@ -14,7 +14,7 @@ $ sudo apt-get install -y nodejs
 ## Setup & Installation
 Clone the project repo into the "pricefeed" directory and install using NPM:
 
-```json
+```
 $ git clone https://github.com/DoctorLai/pricefeed.git pricefeed
 $ cd pricefeed
 $ npm install
@@ -53,7 +53,7 @@ docker logs pricefeed
 
 ## Configuration
 List of STEEM RPC nodes to use:
-```
+```json
 {
   "rpc_nodes": [
     "https://api.steemit.com",
