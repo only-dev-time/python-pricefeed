@@ -2,14 +2,11 @@
 
 ![image](https://user-images.githubusercontent.com/1764434/173547905-6366f5eb-22dc-4327-bbda-6a4cc4cd3b96.png)
 
-## Install nodejs & npm (TODO: CHECK)
-If you already have nodejs & npm installed you can skip this section, but I wanted to include it here for thoroughness. Run the following commands to install nodejs and npm in order to run the pricefeed software:
+This is a python version of the price feed publishing tool from [rexthetech's](https://github.com/rexthetech/pricefeed) respectively [justyy's](https://github.com/DoctorLai/pricefeed) javascript version. 
+This version is especially intended for users who already use steem-python and do not want to enter their private key in config.json. With the wallet tool [steempy](https://steem.readthedocs.io/en/latest/cli.html), the keys can be used in such a way that they do not have to be stored locally in plain text. For configuration of steempy look at this [tutorial](https://steemit.com/utopian-io/@steempytutorials/part-1-how-to-configure-the-steempy-cli-wallet-and-upvote-an-article-with-steem-python).
 
-```bash
-$ sudo apt-get update
-$ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-$ sudo apt-get install -y nodejs
-```
+## Installed python & steem-python
+Python and [steem-python](https://github.com/steemit/steem-python) must be installed on the system.
 
 ## Setup & Installation
 Clone the project repo into the "pricefeed" directory and set permissions to run the script for all users:
@@ -36,12 +33,12 @@ Add following line to the end of existing entries:
 46 3,15 * * * ~/pricefeed/pricefeed_start.sh &
 ```
 
-Save the file with <code>Ctrl+X</code>. Now the script will start at 3:46 am/pm every day.
+Maybe you have to changed the path. Save the file with <code>Ctrl+X</code> (if use the nano editor). Now the script will start at 3:46 am/pm every day.
 In that case, the script should be configured so that the internal loop only runs once. For this, set <code>"interval": 0</code> in config.json (see below).
 
 ### Run in background by starting manually
 You can also start the programme once and then let the internal loop run continuously. For this, set <code>"interval"</code> in config.json with the delay time in minutes (see below).
-Start the program with following bash-command:
+Start the program with following bash command:
 
 ```bash
 $ sh pricefeed_start.sh
