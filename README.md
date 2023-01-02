@@ -5,54 +5,53 @@
 ## Install nodejs & npm (TODO: CHECK)
 If you already have nodejs & npm installed you can skip this section, but I wanted to include it here for thoroughness. Run the following commands to install nodejs and npm in order to run the pricefeed software:
 
-```
+```bash
 $ sudo apt-get update
 $ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
 ```
 
-## Setup & Installation (TODO: CHECK)
-Clone the project repo into the "pricefeed" directory and install using NPM:
+## Setup & Installation
+Clone the project repo into the "pricefeed" directory and set permissions to run the script for all users:
 
-```
-$ git clone https://github.com/DoctorLai/pricefeed.git pricefeed
+```bash
+$ git clone https://github.com/only-dev-time/python-pricefeed pricefeed
 $ cd pricefeed
-$ npm install
+$ chmod a+x feed.py
+$ chmod a+x pricefeed_start.sh
 ```
 
 Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://steem.readthedocs.io/en/latest/cli.html)
 
-### Run in background with PM2 (TODO: CHECK)
-I suggest using the PM2 software to manage and run your nodejs programs in the background. Use the following commands to install PM2 and run the pricefeed program:
+### Run in background as cron job
+I suggest using the using of crontab to manage and run your python pricefeed in the background. Use the following commands to install the cron job and run the pricefeed program:
 
+```bash
+$ crontab -e
 ```
-$ sudo npm install pm2 -g
-$ pm2 start feed.js
-$ pm2 logs feed
-$ pm2 save
+
+Add following line to the end of existing entries:
+
+```bash
+46 3,15 * * * ~/pricefeed/pricefeed_start.sh &
+```
+
+Save the file with <code>Ctrl+X</code>. Now the script will start at 3:46 am/pm every day.
+In that case, the script should be configured so that the internal loop only runs once. For this, set <code>"interval": 0</code> in config.json (see below).
+
+### Run in background by starting manually
+You can also start the programme once and then let the internal loop run continuously. For this, set <code>"interval"</code> in config.json with the delay time in minutes (see below).
+Start the program with following bash-command:
+
+```bash
+$ sh pricefeed_start.sh
 ```
 
 If everything worked you should not see any errors in the logs and a price feed transaction should have been published to your account.
 
-### Run in Docker (TODO: CHECK)
-If you prefer using Docker, use the following commands:
+## Configuration
+List of STEEM RPC nodes to use and other settings:
 
-```
-# build your own docker image
-docker build -t pricefeed .
-
-# edit config.json and run container
-docker run -itd \
-    --name pricefeed \
-    -v $(pwd)/config.json:/app/config.json \
-    pricefeed
-
-# Check the status with docker logs
-docker logs pricefeed
-```
-
-## Configuration (TODO: nodes anpassen)
-List of STEEM RPC nodes to use:
 ```json
 {
   "rpc_nodes": [
