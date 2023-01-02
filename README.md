@@ -17,8 +17,7 @@ Clone the project repo into the "pricefeed" directory and set permissions to run
 ```bash
 $ git clone https://github.com/only-dev-time/python-pricefeed pricefeed
 $ cd pricefeed
-$ chmod a+x feed.py
-$ chmod a+x pricefeed_start.sh
+$ chmod a+x feed.py pricefeed_start.sh
 ```
 
 Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://steem.readthedocs.io/en/latest/cli.html).
