@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/1764434/173547905-6366f5eb-22dc-4327-bbda-6a4cc4cd3b96.png)
 
-## Install nodejs & npm
+## Install nodejs & npm (TODO: CHECK)
 If you already have nodejs & npm installed you can skip this section, but I wanted to include it here for thoroughness. Run the following commands to install nodejs and npm in order to run the pricefeed software:
 
 ```
@@ -11,7 +11,7 @@ $ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
 ```
 
-## Setup & Installation
+## Setup & Installation (TODO: CHECK)
 Clone the project repo into the "pricefeed" directory and install using NPM:
 
 ```
@@ -20,9 +20,9 @@ $ cd pricefeed
 $ npm install
 ```
 
-Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables.
+Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://steem.readthedocs.io/en/latest/cli.html)
 
-### Run in background with PM2
+### Run in background with PM2 (TODO: CHECK)
 I suggest using the PM2 software to manage and run your nodejs programs in the background. Use the following commands to install PM2 and run the pricefeed program:
 
 ```
@@ -34,7 +34,7 @@ $ pm2 save
 
 If everything worked you should not see any errors in the logs and a price feed transaction should have been published to your account.
 
-### Run in Docker
+### Run in Docker (TODO: CHECK)
 If you prefer using Docker, use the following commands:
 
 ```
@@ -51,7 +51,7 @@ docker run -itd \
 docker logs pricefeed
 ```
 
-## Configuration
+## Configuration (TODO: nodes anpassen)
 List of STEEM RPC nodes to use:
 ```json
 {
