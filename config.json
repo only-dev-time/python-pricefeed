@@ -1,18 +1,19 @@
 {
   "rpc_nodes": [
+    "https://steemd.steemworld.org",
+    "https://api.steemwow.com",
     "https://api.steemit.com",
-    "https://api.steemzzang.com",
     "https://api.steem-fanbase.com",
     "https://api.steemitdev.com",
-    "https://steem.ecosynthesizer.com",
     "https://api.justyy.com",
-    "https://api.wherein.io",
-    "https://steem.justyy.workers.dev",
-    "https://justyy.azurewebsites.net/api/steem",
-    "https://api.dlike.io",
-    "https://steemapi.boylikegirl.club"
+    "https://api.pennsif.net",
+    "https://steemapi.boylikegirl.club",
+    "https://api.steem.fans",
+    "https://api.steemyy.com",
+    "https://api.steem.buzz",
+    "https://api.campingclub.me"
   ],
-  "feed_steem_account": "moecki_test",
+  "feed_steem_account": "",
   "feed_steem_active_key": "",
   "coinmarketcap_api_key": "",
   "exchanges": ["coingecko", "cryptocompare", "cloudflare"],
