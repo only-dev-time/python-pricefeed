@@ -4,7 +4,7 @@
 
 This is a python version of the price feed publishing tool from [rexthetech's](https://github.com/rexthetech/pricefeed) respectively [justyy's](https://github.com/DoctorLai/pricefeed) javascript version.
 
-This version is especially intended for users who already use steem-python and do not want to enter their private key in config.json. With the wallet tool [steempy](https://steem.readthedocs.io/en/latest/cli.html) the keys can be used in such a way that they do not have to be stored locally in plain text. For configuration of steempy look at this [tutorial](https://steemit.com/utopian-io/@steempytutorials/part-1-how-to-configure-the-steempy-cli-wallet-and-upvote-an-article-with-steem-python).
+This version is especially intended for witnesses who already use steem-python and do not want to enter their private key in config.json. With the wallet tool [steempy](https://steem.readthedocs.io/en/latest/cli.html) the keys can be used in such a way that they do not have to be stored locally in plain text. For configuration of steempy look at this [tutorial](https://steemit.com/utopian-io/@steempytutorials/part-1-how-to-configure-the-steempy-cli-wallet-and-upvote-an-article-with-steem-python).
 
 ## Installed python & steem-python
 
@@ -20,7 +20,7 @@ $ cd pricefeed
 $ chmod a+x feed.py pricefeed_start.sh
 ```
 
-Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://steem.readthedocs.io/en/latest/cli.html).
+Update the config.json file with your witness account name and private active key as described in the Configuration section below. Alternative, you can set account and private key in environment variables or you can use [steempy](https://github.com/steemit/steem-python/blob/master/docs/cli.rst).
 
 ### Run in background as cron job
 
