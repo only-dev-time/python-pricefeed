@@ -1,6 +1,7 @@
 {
   "rpc_nodes": [
     "https://steemd.steemworld.org",
+    "https://api.campingclub.me",
     "https://api.steemwow.com",
     "https://api.steemit.com",
     "https://api.steem-fanbase.com",
@@ -10,14 +11,13 @@
     "https://steemapi.boylikegirl.club",
     "https://api.steem.fans",
     "https://api.steemyy.com",
-    "https://api.steem.buzz",
-    "https://api.campingclub.me"
+    "https://api.steem.buzz"
   ],
   "feed_steem_account": "",
   "feed_steem_active_key": "",
   "coinmarketcap_api_key": "",
-  "exchanges": ["coingecko", "cryptocompare", "cloudflare"],
-  "interval": 0,
+  "exchanges": ["coingecko", "cryptocompare", "cloudflare", "coinmarketcap"],
+  "interval": 60,
   "feed_publish_interval": 30,
   "feed_publish_fail_retry": 5,
   "price_feed_max_retry": 5,
