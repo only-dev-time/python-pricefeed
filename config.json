@@ -1,5 +1,6 @@
 {
   "rpc_nodes": [
+    "https://api.moecki.online",
     "https://steemd.steemworld.org",
     "https://api.campingclub.me",
     "https://api.steemwow.com",
@@ -16,7 +17,7 @@
   "feed_steem_account": "",
   "feed_steem_active_key": "",
   "coinmarketcap_api_key": "",
-  "exchanges": ["coingecko", "cryptocompare", "coinmarketcap"],
+  "exchanges": ["coingecko", "cryptocompare", "binance", "poloniex", "bittrex"],
   "interval": 60,
   "feed_publish_interval": 30,
   "feed_publish_fail_retry": 5,
