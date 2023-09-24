@@ -224,13 +224,13 @@ def load_price_poloniex(max_retry: int, retry_interval: int):
             json_data = {x["symbol"]: x for x in response.json()}
             steem_price = -1.0
             if json_data["STEEM_BTC"] and json_data["BTC_USDT"]:
-                log_info("STEEM_BTC and BTC_USDT")
+                # log_info("STEEM_BTC and BTC_USDT")
                 steem_price = float(json_data["STEEM_BTC"]["price"]) * float(json_data["BTC_USDT"]["price"])
             if json_data["STEEM_TRX"] and json_data["TRX_USDT"]:
-                log_info("STEEM_TRX and TRX_USDT")
+                # log_info("STEEM_TRX and TRX_USDT")
                 steem_price = float(json_data["STEEM_TRX"]["price"]) * float(json_data["TRX_USDT"]["price"])
             if json_data["STEEM_USDT"]:
-                log_info("STEEM_USDT")
+                # log_info("STEEM_USDT")
                 steem_price = float(json_data["STEEM_USDT"]["price"])
             if steem_price > 0:
                 log_info(f"Loaded STEEM Price from Binance: {steem_price}")
