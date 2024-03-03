@@ -261,6 +261,23 @@ def load_price_bittrex(max_retry: int, retry_interval: int):
     return None
 
 
+def load_price_slowapi(max_retry: int, retry_interval: int):
+    retries = 0
+    while retries < max_retry:
+        try:
+            # Load STEEM price in USD from SlowAPI (https://steemit.com/witness-category/@justyy/a-free-crypto-fiat-slow-api)
+            response = requests.get("https://slowapi.com/api/yf/")
+            json_data = response.json()
+            steem_price = float(json_data["data"]["STEEM-USD"]["regularMarketPrice"])
+            log_info(f"Loaded STEEM Price from SlowAPI: {steem_price}")
+            return steem_price
+        except Exception as err:
+            log_error(f"Error loading STEEM price from SlowAPI: {err.args[0]}")
+            retries += 1
+            time.sleep(retry_interval)
+    return None
+
+
 # -------------------------------------------------------------------
 # Main Functions
 # -------------------------------------------------------------------
@@ -311,6 +328,9 @@ def run_pricefeed():
 
         if "bittrex" in exchanges:
             prices.append(load_price_bittrex(max_retry, retry_interval))
+
+        if "slowapi" in exchanges:
+            prices.append(load_price_slowapi(max_retry, retry_interval))
 
         prices = list(filter(None, prices))
         if len(prices):
