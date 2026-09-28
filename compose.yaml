@@ -1,0 +1,9 @@
+services:
+  pricefeed:
+    build: .
+    container_name: pricefeed
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PRICEFEED_LOG_TO_STDOUT: "1"

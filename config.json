@@ -1,20 +1,15 @@
 {
   "rpc_nodes": [
     "https://api.moecki.online",
-    "https://steemd.steemworld.org",
-    "https://api.campingclub.me",
-    "https://api.steemit.com",
-    "https://api.steemitdev.com",
-    "https://api.justyy.com",
-    "https://api.pennsif.net",
-    "https://steemapi.boylikegirl.club",
     "https://api.steem.fans",
-    "https://api.steemyy.com",
-    "https://api.steem.buzz"
+    "https://steemd.steemworld.org",
+    "https://api.steememory.com",
+    "https://api.justyy.com",
+    "https://api2.justyy.com",
+    "https://api.pennsif.net",
+    "https://api.steemit.com"
   ],
   "feed_steem_account": "",
-  "feed_steem_active_key": "",
-  "coinmarketcap_api_key": "",
   "exchanges": ["coingecko", "cryptocompare", "binance", "poloniex", "slowapi"],
   "interval": 60,
   "feed_publish_interval": 30,

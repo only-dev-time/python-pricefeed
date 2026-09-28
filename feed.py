@@ -27,7 +27,7 @@ def publish_feed(steem_client: Steem, account: str, max_retry: int, retry_interv
 
             log_info(f"Broadcasting feed_publish transaction: {exchange_rate}")
 
-            steem_client.witness_feed_publish(exchange_rate["base"], exchange_rate["quote"], account)
+            steem_client.witness_feed_publish(exchange_rate["base"], exchange_rate["quote"], account)  # type: ignore
 
             log_info("Broadcast successful!")
             break
@@ -53,12 +53,8 @@ def get_rpc_node(config: dict):
     return rpc_nodes if rpc_nodes else ["https://api.steemit.com"]
 
 
-# if feed_steem_active_key is not set in config.json
-# then look for it in environment variables
-def get_active_key(config: dict):
-    key = config.get("feed_steem_active_key", "")
-    if key:
-        return key
+# take feed_steem_active_key from the environment
+def get_active_key():
     return os.environ.get("FEED_STEEM_ACTIVE_KEY", "")
 
 
@@ -71,12 +67,8 @@ def get_account_name(config: dict):
     return os.environ.get("FEED_STEEM_ACCOUNT", "")
 
 
-# if coinmarketcap_api_key is not set in config.json
-# then look for it in environment variables
-def get_coinmarketcap_api_key(config: dict):
-    key = config.get("coinmarketcap_api_key", "")
-    if key:
-        return key
+# take coinmarketcap_api_key from the environment
+def get_coinmarketcap_api_key():
     return os.environ.get("COINMARKETCAP_API_KEY", "")
 
 
@@ -116,6 +108,19 @@ def log_info(msg):
 
 def log_error(msg):
     logging.error(str(datetime.datetime.now()) + " - " + str(msg))
+
+
+def get_log_config():
+    log_config = {
+        "format": "%(asctime)s %(levelname)s %(message)s",
+        "level": logging.INFO,
+    }
+    if os.environ.get("PRICEFEED_LOG_TO_STDOUT") == "1":
+        log_config["stream"] = sys.stdout
+    else:
+        log_config["filename"] = LOG_FILE
+        log_config["filemode"] = "a"
+    return log_config
 
 
 # -------------------------------------------------------------------
@@ -175,7 +180,7 @@ def load_price_cryptocompare(max_retry: int, retry_interval: int):
 
 def load_price_coinmarketcap(max_retry: int, retry_interval: int, api_key: str):
     if not api_key:
-        log_error("coinmarketcap_api_key not set in config.json or environment")
+        log_error("COINMARKETCAP_API_KEY not set in environment")
         sys.exit(1)
 
     retries = 0
@@ -202,7 +207,9 @@ def load_price_binance(max_retry: int, retry_interval: int):
     while retries < max_retry:
         try:
             # Load STEEM price in USDT directly from Binance
-            response = requests.get("https://api.binance.com/api/v3/avgPrice?symbol=STEEMUSDT")
+            # response = requests.get("https://api.binance.com/api/v3/avgPrice?symbol=STEEMUSDT")
+            # for requests from the USA another endpoint is necessary
+            response = requests.get("https://data-api.binance.vision/api/v3/avgPrice?symbol=STEEMUSDT")
             json_data = response.json()
             steem_price = float(json_data["price"])
             log_info(f"Loaded STEEM Price from Binance: {steem_price}")
@@ -282,10 +289,10 @@ def run_pricefeed():
         log_error("no exchanges are specified.")
         sys.exit(1)
 
-    coinmarketcap_api_key = get_coinmarketcap_api_key(config)
+    coinmarketcap_api_key = get_coinmarketcap_api_key()
 
     # with steempy empty key possible
-    active_key = get_active_key(config)
+    active_key = get_active_key()
     st = Steem(nodes=rpc_nodes, keys=[active_key]) if active_key else Steem(nodes=rpc_nodes)
 
     # load prices
@@ -338,7 +345,5 @@ def run_pricefeed():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        filename=LOG_FILE, filemode="a", format="%(asctime)s %(levelname)s %(message)s", level=logging.INFO
-    )
+    logging.basicConfig(**get_log_config())
     run_pricefeed()
