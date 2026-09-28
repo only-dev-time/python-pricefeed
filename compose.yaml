@@ -1,6 +1,7 @@
 services:
   pricefeed:
     build: .
+    container_name: pricefeed
     restart: unless-stopped
     env_file:
       - .env

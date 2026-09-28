@@ -13,6 +13,13 @@ This version uses my updated Python library [steempy](https://github.com/only-de
 I suggest runnig the pricefeed in a docker container.
 Docker Compose keeps the witness account and other non-secret runtime settings in `config.json`. The private active key and optional API keys belong in `.env`; `.env` is ignored by Git and excluded from the image build context.
 
+Clone the project repo into the "pricefeed" directory and set permissions to run the script for all users:
+
+```bash
+git clone https://github.com/only-dev-time/python-pricefeed pricefeed
+cd pricefeed
+```
+
 Copy the example environment file and set your private active key:
 
 ```bash
