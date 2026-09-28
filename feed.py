@@ -207,7 +207,9 @@ def load_price_binance(max_retry: int, retry_interval: int):
     while retries < max_retry:
         try:
             # Load STEEM price in USDT directly from Binance
-            response = requests.get("https://api.binance.com/api/v3/avgPrice?symbol=STEEMUSDT")
+            # response = requests.get("https://api.binance.com/api/v3/avgPrice?symbol=STEEMUSDT")
+            # for requests from the USA another endpoint is necessary
+            response = requests.get("https://data-api.binance.vision/api/v3/avgPrice?symbol=STEEMUSDT")
             json_data = response.json()
             steem_price = float(json_data["price"])
             log_info(f"Loaded STEEM Price from Binance: {steem_price}")
