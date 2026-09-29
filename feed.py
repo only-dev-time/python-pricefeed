@@ -161,23 +161,6 @@ def load_price_coingecko(max_retry: int, retry_interval: int):
     return None
 
 
-def load_price_cryptocompare(max_retry: int, retry_interval: int):
-    retries = 0
-    while retries < max_retry:
-        try:
-            # Load STEEM price in USD directly from CoinGecko
-            response = requests.get("https://min-api.cryptocompare.com/data/price?fsym=STEEM&tsyms=USDT")
-            json_data = response.json()
-            steem_price = float(json_data["USDT"])
-            log_info(f"Loaded STEEM Price from Cryptocompare: {steem_price}")
-            return steem_price
-        except Exception as err:
-            log_error(f"Error loading STEEM price from Cryptocompare: {err.args[0]}")
-            retries += 1
-            time.sleep(retry_interval)
-    return None
-
-
 def load_price_coinmarketcap(max_retry: int, retry_interval: int, api_key: str):
     if not api_key:
         log_error("COINMARKETCAP_API_KEY not set in environment")
@@ -290,9 +273,6 @@ def run_pricefeed():
 
         if "coingecko" in exchanges:
             prices.append(load_price_coingecko(max_retry, retry_interval))
-
-        if "cryptocompare" in exchanges:
-            prices.append(load_price_cryptocompare(max_retry, retry_interval))
 
         if "coinmarketcap" in exchanges:
             prices.append(load_price_coinmarketcap(max_retry, retry_interval, coinmarketcap_api_key))
