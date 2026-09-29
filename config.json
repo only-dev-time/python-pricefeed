@@ -10,11 +10,11 @@
     "https://api.steemit.com"
   ],
   "feed_steem_account": "",
-  "exchanges": ["coingecko", "cryptocompare", "binance", "poloniex", "slowapi"],
+  "exchanges": ["coingecko", "binance", "poloniex", "slowapi"],
   "interval": 60,
   "feed_publish_interval": 30,
   "feed_publish_fail_retry": 5,
   "price_feed_max_retry": 5,
-  "retry_interval": 10, 
+  "retry_interval": 10,
   "peg_multi": 1
 }

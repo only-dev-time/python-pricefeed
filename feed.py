@@ -73,7 +73,7 @@ def get_coinmarketcap_api_key():
 
 
 def get_exchanges(config: dict):
-    return config.get("exchanges", [])
+    return [exchange.lower() for exchange in config.get("exchanges", [])]
 
 
 def get_retry_interval(config: dict):
@@ -161,23 +161,6 @@ def load_price_coingecko(max_retry: int, retry_interval: int):
     return None
 
 
-def load_price_cryptocompare(max_retry: int, retry_interval: int):
-    retries = 0
-    while retries < max_retry:
-        try:
-            # Load STEEM price in USD directly from CoinGecko
-            response = requests.get("https://min-api.cryptocompare.com/data/price?fsym=STEEM&tsyms=USDT")
-            json_data = response.json()
-            steem_price = float(json_data["USDT"])
-            log_info(f"Loaded STEEM Price from Cryptocompare: {steem_price}")
-            return steem_price
-        except Exception as err:
-            log_error(f"Error loading STEEM price from Cryptocompare: {err.args[0]}")
-            retries += 1
-            time.sleep(retry_interval)
-    return None
-
-
 def load_price_coinmarketcap(max_retry: int, retry_interval: int, api_key: str):
     if not api_key:
         log_error("COINMARKETCAP_API_KEY not set in environment")
@@ -238,23 +221,6 @@ def load_price_poloniex(max_retry: int, retry_interval: int):
     return None
 
 
-def load_price_bittrex(max_retry: int, retry_interval: int):
-    retries = 0
-    while retries < max_retry:
-        try:
-            # Load STEEM price in USDT directly from Bittrex
-            response = requests.get("https://api.bittrex.com/v3/markets/STEEM-USDT/ticker")
-            json_data = response.json()
-            steem_price = float(json_data["lastTradeRate"])
-            log_info(f"Loaded STEEM Price from Bittrex: {steem_price}")
-            return steem_price
-        except Exception as err:
-            log_error(f"Error loading STEEM price from Bittrex: {err.args[0]}")
-            retries += 1
-            time.sleep(retry_interval)
-    return None
-
-
 def load_price_slowapi(max_retry: int, retry_interval: int):
     retries = 0
     while retries < max_retry:
@@ -267,6 +233,23 @@ def load_price_slowapi(max_retry: int, retry_interval: int):
             return steem_price
         except Exception as err:
             log_error(f"Error loading STEEM price from SlowAPI: {err.args[0]}")
+            retries += 1
+            time.sleep(retry_interval)
+    return None
+
+
+def load_price_gateio(max_retry: int, retry_interval: int):
+    retries = 0
+    while retries < max_retry:
+        try:
+            # Load STEEM price in USDT from Gate.io
+            response = requests.get("https://api.gateio.ws/api/v4/spot/tickers?currency_pair=STEEM_USDT")
+            json_data = response.json()[0]
+            steem_price = float(json_data["last"])
+            log_info(f"Loaded STEEM Price from Gate.io: {steem_price}")
+            return steem_price
+        except Exception as err:
+            log_error(f"Error loading STEEM price from Gate.io: {err.args[0]}")
             retries += 1
             time.sleep(retry_interval)
     return None
@@ -308,9 +291,6 @@ def run_pricefeed():
         if "coingecko" in exchanges:
             prices.append(load_price_coingecko(max_retry, retry_interval))
 
-        if "cryptocompare" in exchanges:
-            prices.append(load_price_cryptocompare(max_retry, retry_interval))
-
         if "coinmarketcap" in exchanges:
             prices.append(load_price_coinmarketcap(max_retry, retry_interval, coinmarketcap_api_key))
 
@@ -320,11 +300,11 @@ def run_pricefeed():
         if "poloniex" in exchanges:
             prices.append(load_price_poloniex(max_retry, retry_interval))
 
-        if "bittrex" in exchanges:
-            prices.append(load_price_bittrex(max_retry, retry_interval))
-
         if "slowapi" in exchanges:
             prices.append(load_price_slowapi(max_retry, retry_interval))
+
+        if "gateio" in exchanges:
+            prices.append(load_price_gateio(max_retry, retry_interval))
 
         prices = list(filter(None, prices))
         if len(prices):
