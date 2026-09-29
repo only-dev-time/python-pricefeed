@@ -237,6 +237,21 @@ def load_price_slowapi(max_retry: int, retry_interval: int):
             time.sleep(retry_interval)
     return None
 
+def load_price_gateio(max_retry: int, retry_interval: int):
+    retries = 0
+    while retries < max_retry:
+        try:
+            # Load STEEM price in USDT from Gate.io
+            response = requests.get("https://api.gateio.ws/api/v4/spot/tickers?currency_pair=STEEM_USDT")
+            json_data = response.json()[0]
+            steem_price = float(json_data["last"])
+            log_info(f"Loaded STEEM Price from Gate.io: {steem_price}")
+            return steem_price
+        except Exception as err:
+            log_error(f"Error loading STEEM price from Gate.io: {err.args[0]}")
+            retries += 1
+            time.sleep(retry_interval)
+    return None
 
 # -------------------------------------------------------------------
 # Main Functions
@@ -285,6 +300,9 @@ def run_pricefeed():
 
         if "slowapi" in exchanges:
             prices.append(load_price_slowapi(max_retry, retry_interval))
+
+        if "gateio" in exchanges:
+            prices.append(load_price_gateio(max_retry, retry_interval))
 
         prices = list(filter(None, prices))
         if len(prices):
