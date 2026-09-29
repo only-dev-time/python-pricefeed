@@ -73,7 +73,7 @@ def get_coinmarketcap_api_key():
 
 
 def get_exchanges(config: dict):
-    return config.get("exchanges", [])
+    return [exchange.lower() for exchange in config.get("exchanges", [])]
 
 
 def get_retry_interval(config: dict):
