@@ -237,6 +237,7 @@ def load_price_slowapi(max_retry: int, retry_interval: int):
             time.sleep(retry_interval)
     return None
 
+
 def load_price_gateio(max_retry: int, retry_interval: int):
     retries = 0
     while retries < max_retry:
@@ -252,6 +253,7 @@ def load_price_gateio(max_retry: int, retry_interval: int):
             retries += 1
             time.sleep(retry_interval)
     return None
+
 
 # -------------------------------------------------------------------
 # Main Functions
