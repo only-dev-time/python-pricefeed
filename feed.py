@@ -238,23 +238,6 @@ def load_price_poloniex(max_retry: int, retry_interval: int):
     return None
 
 
-def load_price_bittrex(max_retry: int, retry_interval: int):
-    retries = 0
-    while retries < max_retry:
-        try:
-            # Load STEEM price in USDT directly from Bittrex
-            response = requests.get("https://api.bittrex.com/v3/markets/STEEM-USDT/ticker")
-            json_data = response.json()
-            steem_price = float(json_data["lastTradeRate"])
-            log_info(f"Loaded STEEM Price from Bittrex: {steem_price}")
-            return steem_price
-        except Exception as err:
-            log_error(f"Error loading STEEM price from Bittrex: {err.args[0]}")
-            retries += 1
-            time.sleep(retry_interval)
-    return None
-
-
 def load_price_slowapi(max_retry: int, retry_interval: int):
     retries = 0
     while retries < max_retry:
@@ -319,9 +302,6 @@ def run_pricefeed():
 
         if "poloniex" in exchanges:
             prices.append(load_price_poloniex(max_retry, retry_interval))
-
-        if "bittrex" in exchanges:
-            prices.append(load_price_bittrex(max_retry, retry_interval))
 
         if "slowapi" in exchanges:
             prices.append(load_price_slowapi(max_retry, retry_interval))
